@@ -15,7 +15,7 @@ function App() {
       manufacturer: data.results[0].manufacturer,
       model: data.results[0].model,
     };
-    setStarShip(...starShip, newShip);
+    setStarShip([...starShip, newShip]);
   }
 
   return (
