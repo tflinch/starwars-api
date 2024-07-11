@@ -6,12 +6,22 @@ const show = async(ship)=>{
         const queryString = `?search=${ship}`;
         const res = await fetch(BASE_URL +queryString)
         const data = await res.json();
-        console.log('data: \n', data)
         return data
     } catch (error) {
         console.log(error)
     }
-
 }
 
-export {show};
+
+const defualt = async()=>{
+    try {
+        const res = await fetch(BASE_URL)
+        const data = await res.json();
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export {show, defualt};

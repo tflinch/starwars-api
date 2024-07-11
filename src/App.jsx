@@ -1,5 +1,5 @@
 import './App.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as starShipSearch from './services/starShipService'
 import StarShipSearch from './components/StarShipSearch';
 import StarShipList from './components/StarShipList';
@@ -7,15 +7,37 @@ import StarShipList from './components/StarShipList';
 function App() {
   const [starShip, setStarShip] = useState([]);
 
+  useEffect(() => {
+
+    // Define a fetch function:
+    const fetchDefaultData = async () => {
+      const data = await starShipSearch.defualt();
+      const newShip = data.results.map(starShip => {
+        return {
+          name: starShip.name,
+          class: starShip.starship_class,
+          manufacturer: starShip.manufacturer,
+          model: starShip.model,
+        }
+      });
+      console.log('NewShip:', newShip)
+      setStarShip(newShip);
+    };
+    fetchDefaultData();
+  }, []);
+
   const fetchData = async (ship) => {
     const data = await starShipSearch.show(ship);
-    const newShip = {
-      name: data.results[0].name,
-      class: data.results[0].starship_class,
-      manufacturer: data.results[0].manufacturer,
-      model: data.results[0].model,
-    };
-    setStarShip([...starShip, newShip]);
+    const newShip = data.results.map(starShip => {
+      return {
+        name: starShip.name,
+        class: starShip.starship_class,
+        manufacturer: starShip.manufacturer,
+        model: starShip.model,
+      }
+    });
+
+    setStarShip(newShip);
   }
 
   return (
@@ -23,7 +45,7 @@ function App() {
       <main>
         <h1>Star Wars API</h1>
         <StarShipSearch fetchData={fetchData} />
-        <StarShipList starShip={starShip} />
+        <StarShipList starShips={starShip} />
       </main>
     </>
   )

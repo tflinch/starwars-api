@@ -2,8 +2,7 @@ import StarshipCard from "./StarshipCard"
 
 
 const StarShipList = (props) => {
-    console.log(props)
-    const ship = props.starShip.map(starShip => {
+    const ship = props.starShips.map(starShip => {
         return (
             <StarshipCard key={starShip._id} starShip={starShip} />
         )
@@ -13,8 +12,11 @@ const StarShipList = (props) => {
     return (
         <section>
             <h2>Starships</h2>
-            <p>Number of results: {props.starShip.length}</p>
-            {ship}
+            <p>Number of results: {props.starShips.length}</p>
+            <ul>
+                {ship}
+            </ul>
+
         </section>
     )
 }
